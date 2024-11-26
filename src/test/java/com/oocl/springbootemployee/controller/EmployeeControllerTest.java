@@ -7,6 +7,8 @@ import static org.hamcrest.Matchers.hasSize;
 import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeMemoryRepository;
+
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.oocl.springbootemployee.repository.EmployeeRepository;
@@ -41,8 +43,9 @@ class EmployeeControllerTest {
 
     @BeforeEach
     void setUp(){
-        givenDataToJpaRepository();
+//        givenDataToJpaRepository();
         employeeRepository.deleteAll();
+        insertDataToDataBase();
     }
     public void insertDataToDataBase(){
         employeeRepository.save(new Employee(null, "John Smith", 32, Gender.MALE, 5000.0));
@@ -98,8 +101,8 @@ class EmployeeControllerTest {
     @Test
     void should_return_employees_when_get_by_gender() throws Exception {
         // Given
-        Employee femaleEmployee = employeeMemoryRepository.findAll().get(1);
-        Employee femaleEmployee2 = employeeMemoryRepository.findAll().get(3);
+        Employee femaleEmployee = employeeRepository.findAll().get(1);
+        Employee femaleEmployee2 = employeeRepository.findAll().get(3);
 
         // When
         // Then
