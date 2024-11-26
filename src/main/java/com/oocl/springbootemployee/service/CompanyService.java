@@ -43,13 +43,13 @@ public class CompanyService {
     }
 
     public Company update(Integer id, Company company) {
-        final var companyNeedToUpdate = companyInMemoryRepository
+        final var companyNeedToUpdate = companyRepository
                 .findById(id);
 
-        var nameToUpdate = company.getName() == null ? companyNeedToUpdate.getName() : company.getName();
-        var employeesToUpdate = company.getEmployees() == null ? companyNeedToUpdate.getEmployees() : company.getEmployees();
+        var nameToUpdate = company.getName() == null ? companyNeedToUpdate.get().getName() : company.getName();
+        var employeesToUpdate = company.getEmployees() == null ? companyNeedToUpdate.get().getEmployees() : company.getEmployees();
 
         final var companyToUpdate = new Company(id,nameToUpdate,employeesToUpdate);
-        return companyInMemoryRepository.updateCompany(id, companyToUpdate);
+        return companyRepository.save(companyToUpdate);
     }
 }
