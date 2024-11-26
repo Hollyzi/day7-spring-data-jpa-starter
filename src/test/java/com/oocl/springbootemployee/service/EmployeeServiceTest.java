@@ -16,6 +16,7 @@ import com.oocl.springbootemployee.model.Employee;
 import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeMemoryRepository;
 import java.util.List;
+import java.util.Optional;
 
 import com.oocl.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class EmployeeServiceTest {
 
     @Mock
-    private EmployeeRepository mockedEmployeeRepository;
+    EmployeeRepository mockedEmployeeRepository;
     @Mock
     EmployeeMemoryRepository mockedEmployeeMemoryRepository;
 
@@ -106,15 +107,14 @@ class EmployeeServiceTest {
     @Test
     void should_throw_EmployeeInactiveException_when_update_inactive_employee() {
         //given
-        EmployeeMemoryRepository mockedEmployeeMemoryRepository = mock(EmployeeMemoryRepository.class);
+        final EmployeeService employeeService=buildEmployeeService();
         Employee inactiveEmployee = new Employee(1, "Bob", 31, Gender.FEMALE, 8000.0);
         inactiveEmployee.setActive(false);
-        when(mockedEmployeeMemoryRepository.findById(1)).thenReturn(inactiveEmployee);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
+        when(mockedEmployeeRepository.findById(1)).thenReturn(Optional.of(inactiveEmployee));
         //when
         //then
         assertThrows(EmployeeInactiveException.class, () -> employeeService.update(1, inactiveEmployee));
-        verify(mockedEmployeeMemoryRepository, never()).create(any());
+        verify(mockedEmployeeRepository, never()).save(any());
     }
     private EmployeeService buildEmployeeService() {
         mockedEmployeeRepository = mock(EmployeeRepository.class);
