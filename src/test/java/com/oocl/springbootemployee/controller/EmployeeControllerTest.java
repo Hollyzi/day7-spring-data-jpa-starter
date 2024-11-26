@@ -44,8 +44,8 @@ class EmployeeControllerTest {
     @BeforeEach
     void setUp(){
 //        givenDataToJpaRepository();
-        employeeRepository.deleteAll();
-        insertDataToDataBase();
+//        employeeRepository.deleteAll();
+//      insertDataToDataBase();
     }
     public void insertDataToDataBase(){
         employeeRepository.save(new Employee(null, "John Smith", 32, Gender.MALE, 5000.0));
@@ -84,7 +84,7 @@ class EmployeeControllerTest {
     @Test
     void should_return_employee_when_get_by_id() throws Exception {
         // Given
-        final Employee givenEmployee = employeeMemoryRepository.findAll().get(0);
+        final Employee givenEmployee = employeeRepository.findAll().get(0);
 
         // When
         // Then
