@@ -80,7 +80,7 @@ class CompanyControllerTest {
     @Test
     void should_return_all_companies() throws Exception {
         // Given
-        final List<Company> givenCompanies = companyInMemoryRepository.findAll();
+        final List<Company> givenCompanies = companyRepository.findAll();
 
         // When
         final MvcResult result = client.perform(MockMvcRequestBuilders.get("/companies")).andReturn();
