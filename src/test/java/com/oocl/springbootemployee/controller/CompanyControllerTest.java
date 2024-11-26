@@ -135,7 +135,7 @@ class CompanyControllerTest {
     void should_return_company_when_get_by_id() throws Exception {
         // Given
 
-        final var companyGiven = companyInMemoryRepository.findAll().get(0);
+        final var companyGiven = companyRepository.findAll().get(0);
 
         // When
         // Then
