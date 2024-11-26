@@ -9,6 +9,7 @@ import com.oocl.springbootemployee.repository.EmployeeMemoryRepository;
 import java.util.List;
 
 import com.oocl.springbootemployee.repository.EmployeeRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {
@@ -33,7 +34,7 @@ public class EmployeeService {
     }
 
     public Employee findById(Integer employeeId) {
-        return employeeMemoryRepository.findById(employeeId);
+        return employeeRepository.findById(employeeId).orElse(null);
     }
 
     public Employee create(Employee employee) {
