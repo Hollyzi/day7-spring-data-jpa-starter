@@ -29,7 +29,7 @@ class EmployeeServiceTest {
     @Mock
     private EmployeeRepository mockedEmployeeRepository;
     @Mock
-    EmployeeMemoryRepository mockedemployeememoryrepository;
+    EmployeeMemoryRepository mockedEmployeeMemoryRepository;
 
     @Test
     void should_return_the_given_employees_when_getAllEmployees() {
@@ -95,13 +95,12 @@ class EmployeeServiceTest {
     @Test
     void should_throw_EmployeeAgeSalaryNotMatchedException_when_save_given_a_employee_with_age_over_30_and_salary_below_20K() {
         //given
-        EmployeeMemoryRepository mockedEmployeeMemoryRepository = mock(EmployeeMemoryRepository.class);
+        final EmployeeService employeeService=buildEmployeeService();
         Employee bob = new Employee(1, "Bob", 31, Gender.FEMALE, 8000.0);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
         //when
         //then
         assertThrows(EmployeeAgeSalaryNotMatchedException.class, () -> employeeService.create(bob));
-        verify(mockedEmployeeMemoryRepository, never()).create(any());
+        verify(mockedEmployeeRepository, never()).save(any());
     }
 
     @Test
@@ -119,7 +118,7 @@ class EmployeeServiceTest {
     }
     private EmployeeService buildEmployeeService() {
         mockedEmployeeRepository = mock(EmployeeRepository.class);
-        mockedemployeememoryrepository =mock(EmployeeMemoryRepository.class);
-        return new EmployeeService(mockedemployeememoryrepository,mockedEmployeeRepository);
+        mockedEmployeeMemoryRepository =mock(EmployeeMemoryRepository.class);
+        return new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
     }
 }
