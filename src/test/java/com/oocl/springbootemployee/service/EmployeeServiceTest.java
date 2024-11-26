@@ -29,7 +29,7 @@ class EmployeeServiceTest {
     @Mock
     private EmployeeRepository mockedEmployeeRepository;
     @Mock
-    EmployeeMemoryRepository mockedEmployeeMemoryRepository;
+    EmployeeMemoryRepository mockedemployeememoryrepository;
 
     @Test
     void should_return_the_given_employees_when_getAllEmployees() {
@@ -84,13 +84,12 @@ class EmployeeServiceTest {
     @Test
     void should_created_employee_active_when_create_employee() {
         //given
-        EmployeeMemoryRepository mockedEmployeeMemoryRepository = mock(EmployeeMemoryRepository.class);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
+        final EmployeeService employeeService=buildEmployeeService();
         Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
         //when
         employeeService.create(lucy);
         /* then */
-        verify(mockedEmployeeMemoryRepository).create(argThat(Employee::getActive));
+        verify(mockedEmployeeRepository).save(argThat(Employee::getActive));
     }
 
     @Test
@@ -120,7 +119,7 @@ class EmployeeServiceTest {
     }
     private EmployeeService buildEmployeeService() {
         mockedEmployeeRepository = mock(EmployeeRepository.class);
-        mockedEmployeeMemoryRepository=mock(EmployeeMemoryRepository.class);
-        return new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
+        mockedemployeememoryrepository =mock(EmployeeMemoryRepository.class);
+        return new EmployeeService(mockedemployeememoryrepository,mockedEmployeeRepository);
     }
 }
