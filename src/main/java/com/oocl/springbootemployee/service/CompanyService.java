@@ -25,7 +25,6 @@ public class CompanyService {
 
     public List<Company> findAll(int pageIndex, int pageSize) {
         return companyRepository.findAll(PageRequest.of(pageIndex - 1, pageSize)).getContent();
-//        return companiesInPage.stream().toList();
     }
 
     public Company findById(Integer id) {
@@ -51,5 +50,9 @@ public class CompanyService {
 
         final var companyToUpdate = new Company(id,nameToUpdate,employeesToUpdate);
         return companyRepository.save(companyToUpdate);
+    }
+
+    public void delete(Integer id) {
+        companyRepository.deleteById(id);
     }
 }

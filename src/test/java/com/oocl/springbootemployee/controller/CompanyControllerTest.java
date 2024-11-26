@@ -191,6 +191,6 @@ class CompanyControllerTest {
 
         // Then
         assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
-        assertThat(companyInMemoryRepository.findAll()).hasSize(4);
+        assertThat(companyRepository.findAll()).hasSize(4);
     }
 }
