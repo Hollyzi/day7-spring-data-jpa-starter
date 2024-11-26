@@ -98,7 +98,7 @@ class CompanyControllerTest {
     @Test
     void should_return_paged_companies_when_get_by_page_params() throws Exception {
         // Given
-        var pageIndex = 2;
+        var pageIndex = 3;
         var pageSize = 2;
         final var the5thEmployeeCompanyInPage3 = companyRepository.findById(nexus_industries.getId());
 
@@ -106,9 +106,9 @@ class CompanyControllerTest {
         // Then
         client.perform(MockMvcRequestBuilders.get(String.format("/companies?pageIndex=%s&pageSize=%s", pageIndex, pageSize)))
             .andExpect(MockMvcResultMatchers.status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.content", hasSize(1)))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].id").value(the5thEmployeeCompanyInPage3.get().getId()))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].name").value(the5thEmployeeCompanyInPage3.get().getName()));
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(the5thEmployeeCompanyInPage3.get().getId()))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(the5thEmployeeCompanyInPage3.get().getName()));
     }
 
     @Test
