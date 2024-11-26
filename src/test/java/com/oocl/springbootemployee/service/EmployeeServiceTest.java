@@ -45,20 +45,13 @@ class EmployeeServiceTest {
         assertEquals("Lucy", allEmployees.get(0).getName());
     }
 
-    private EmployeeService buildEmployeeService() {
-        mockedEmployeeRepository = mock(EmployeeRepository.class);
-        mockedEmployeeMemoryRepository=mock(EmployeeMemoryRepository.class);
-        return new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
-    }
 
     @Test
     void should_return_the_created_employee_when_create_given_a_employee() {
         //given
-        EmployeeMemoryRepository mockedEmployeeMemoryRepository = mock(EmployeeMemoryRepository.class);
+        final EmployeeService employeeService=buildEmployeeService();
         Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
         when(mockedEmployeeMemoryRepository.create(any())).thenReturn(lucy);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
-
         //when
         Employee createdEmployee = employeeService.create(lucy);
 
@@ -126,5 +119,10 @@ class EmployeeServiceTest {
         //then
         assertThrows(EmployeeInactiveException.class, () -> employeeService.update(1, inactiveEmployee));
         verify(mockedEmployeeMemoryRepository, never()).create(any());
+    }
+    private EmployeeService buildEmployeeService() {
+        mockedEmployeeRepository = mock(EmployeeRepository.class);
+        mockedEmployeeMemoryRepository=mock(EmployeeMemoryRepository.class);
+        return new EmployeeService(mockedEmployeeMemoryRepository,mockedEmployeeRepository);
     }
 }
