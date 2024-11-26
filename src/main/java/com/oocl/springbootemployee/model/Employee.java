@@ -28,6 +28,9 @@ public class Employee {
     public Employee() {
     }
 
+    public Employee(String name, Integer age , Gender gender, Double salary) {
+    }
+
     public Integer getId() {
         return id;
     }
